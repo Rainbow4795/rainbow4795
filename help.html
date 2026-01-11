@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的世界操作系统 - 帮助中心</title>
+    <link rel="icon" type="image/x-icon" href="https://mc.163.com/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        minecraft: {
+                            green: '#7CFC00',
+                            darkgreen: '#228B22',
+                            brown: '#8B4513',
+                            sand: '#F4A460',
+                            stone: '#A9A9A9',
+                            dirt: '#CD853F',
+                            wood: '#DEB887',
+                            blue: '#1E90FF',
+                            red: '#FF6347',
+                            yellow: '#FFD700'
+                        }
+                    },
+                    fontFamily: {
+                        minecraft: ['Minecraft', 'monospace']
+                    },
+                    animation: {
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+                        'bounce-glow': 'bounce-glow 2s ease-in-out infinite',
+                        'spin-slow': 'spin 3s linear infinite',
+                        'pixel-pulse': 'pixel-pulse 1.5s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        'pulse-glow': {
+                            '0%, 100%': { boxShadow: '0 0 5px rgba(124, 252, 0, 0.5)' },
+                            '50%': { boxShadow: '0 0 20px rgba(124, 252, 0, 0.8), 0 0 30px rgba(124, 252, 0, 0.6)' }
+                        },
+                        'bounce-glow': {
+                            '0%, 100%': { 
+                                transform: 'translateY(0)',
+                                boxShadow: '0 0 5px rgba(124, 252, 0, 0.5)'
+                            },
+                            '50%': { 
+                                transform: 'translateY(-10px)',
+                                boxShadow: '0 0 20px rgba(124, 252, 0, 0.8), 0 0 30px rgba(124, 252, 0, 0.6)'
+                            }
+                        },
+                        'pixel-pulse': {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.05)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .pixel-border {
+                border-width: 4px;
+                border-style: solid;
+                border-color: #fff #666 #666 #fff;
+            }
+            .pixel-border-reverse {
+                border-width: 4px;
+                border-style: solid;
+                border-color: #666 #fff #fff #666;
+            }
+            .btn-pixel {
+                @apply pixel-border bg-minecraft-green hover:bg-minecraft-darkgreen text-black font-bold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg;
+            }
+            .btn-pixel-secondary {
+                @apply pixel-border bg-minecraft-yellow hover:bg-yellow-500 text-black font-bold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg;
+            }
+            .feature-card {
+                @apply bg-gray-800/90 pixel-border p-4 hover:scale-105 transition-transform duration-300;
+            }
+            .pixel-cursor {
+                cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgBAMAAACBVGfHAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAnUExURQAAAA4/NgglIKT98CvHrDPryxVjVR6Kd2hOHkk2FSgeC4lnJ////z+CzEgAAAABdFJOUwBA5thmAAAAAWJLR0QMgbNRYwAAAAd0SU1FB+kLBw0aAzZk0XAAAABrSURBVCjPnc9REYAgEATQq7AVtgIVrHAVqEAFKlCBCpYTUUcBAcf7uI83ezezAkCKaYDGYAZLKQ18imgd0X8RRa7Rg1Ng+5DEKR2kD0msG4Pw+fINCNCHARCkxDUMgPuO/u5bw+V2CsdpARs21yTtSf+dVAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNS0xMS0wN1QxMzoyNjowMStwMDowMCLQnJkAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjUtMTEtMDdUMTM6MjY6MDErMDA6MDDlL2cXAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI1LTExLTA3VDEzOjI2OjAxKzAwOjAwb5fL1wAAAABJRU5ErkJggg=='), auto;
+            }
+            .content-box {
+                @apply bg-gray-900/80 pixel-border p-6 backdrop-blur-sm;
+            }
+            .faq-card {
+                @apply bg-gray-800/90 pixel-border mb-4 overflow-hidden;
+            }
+            .faq-question {
+                @apply bg-minecraft-green/10 px-4 py-3 cursor-pointer flex justify-between items-center font-bold hover:bg-minecraft-green/20 transition-colors;
+            }
+            .faq-answer {
+                @apply px-4 py-3 bg-gray-900/80 border-t-2 border-gray-700;
+            }
+            .input-pixel {
+                @apply w-full bg-gray-800 border-2 border-gray-700 px-4 py-2 focus:outline-none focus:border-minecraft-green transition-colors;
+            }
+        }
+    </style>
+    <style>
+        @font-face {
+            font-family: 'Minecraft';
+            src: local('Minecraft'), url('https://download.zoho.com.cn/v1/workdrive/download/yjkvsba4e10f4680f4777a34d4ada277cec63') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }
+        
+        body {
+            font-family: 'Minecraft', monospace;
+            image-rendering: pixelated;
+            background-image: url('https://download.zoho.com.cn/v1/workdrive/download/yjkvsaf16df5d45ed4e5098d02e394ef9fa87');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: rgba(0, 0, 0, 0.7);
+            background-blend-mode: overlay;
+        }
+        
+        .pixel-art {
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        header, footer {
+            background-color: rgba(30, 30, 30, 0.9);
+            backdrop-filter: blur(4px);
+        }
+        
+        .minecraft-text-shadow {
+            text-shadow: 2px 2px 0 #000;
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding-top: 0;
+            padding-bottom: 0;
+            opacity: 0;
+        }
+        
+        .faq-answer.active {
+            max-height: 2000px;
+            opacity: 1;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-icon.active {
+            transform: rotate(180deg);
+        }
+        
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body class="text-white pixel-cursor">
+    <div class="language-switcher">
+        <button id="languageToggle" class="btn-pixel px-3 py-1 text-sm">
+            <i class="fa-solid fa-globe mr-1"></i> English
+        </button>
+    </div>
+
+    <header class="pixel-border mb-8">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="w-10 h-10 bg-minecraft-green pixel-border flex items-center justify-center mr-3 animate-pulse-glow">
+                    <i class="fa-solid fa-cube text-black text-xl"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-minecraft-green minecraft-text-shadow">我的世界操作系统</h1>
+            </div>
+            <nav class="hidden md:flex space-x-6">
+                <a href="index.html" class="text-minecraft-green font-bold"><i class="fa-solid fa-arrow-left mr-1"></i> 回到下载界面</a>
+                <a href="https://space.bilibili.com/3546636693277438" target="_blank" class="hover:text-minecraft-green transition-colors"><i class="fa-brands fa-bilibili mr-1"></i> 个人空间</a>
+                <a href="https://www.douyin.com/user/MS4wLjABAAAANr9qPx26QqoSkeXNmLx8uhxwcjYo8wg9wDSEvlpe5nE?from_tab_name=main" class="hover:text-minecraft-green transition-colors"><i class="fa-brands fa-tiktok mr-1"></i> 个人空间(Douyin)</a>
+                <a href="mcpe.html" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-download mr-1"></i> 下载Minecraft_PE</a>
+            </nav>
+            <button class="md:hidden text-2xl">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4">
+        <section class="mb-16 flex flex-col items-center">
+            <div class="content-box w-full max-w-4xl">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-minecraft-green minecraft-text-shadow text-center" data-zh="帮助中心" data-en="Help Center">帮助中心</h2>
+                <p class="text-lg mb-8 text-center" data-zh="遇到问题了？别担心，就像挖矿遇到僵尸一样，我们有解决方案！" data-en="Encountered a problem? Don't worry, just like mining and encountering zombies, we have solutions!">遇到问题了？别担心，就像挖矿遇到僵尸一样，我们有解决方案！</p>
+                
+                <div class="flex justify-center mb-8">
+                    <div class="w-32 h-32 bg-minecraft-blue pixel-border animate-float flex items-center justify-center">
+                        <div class="w-20 h-20 bg-minecraft-green pixel-border flex items-center justify-center animate-pixel-pulse">
+                            <i class="fa-solid fa-question text-4xl text-black"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16 max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8 text-center text-minecraft-green minecraft-text-shadow" data-zh="常见问题 (FAQ)" data-en="Frequently Asked Questions (FAQ)">常见问题 (FAQ)</h2>
+            
+            <div class="space-y-4">
+                <div class="faq-card">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span data-zh="如何安装我的世界操作系统？" data-en="How to install Minecraft OS?">如何安装我的世界操作系统？</span>
+                        <i class="fa-solid fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="mb-2" data-zh="安装过程比制作工作台还简单：" data-en="The installation process is simpler than crafting a workbench:">安装过程比制作工作台还简单：</p>
+                        <ol class="list-decimal list-inside space-y-1 ml-2">
+                            <li data-zh="下载对应系统版本的安装包（Windows/macOS）" data-en="Download the installation package for your system version (Windows/macOS)">下载对应系统版本的安装包（Windows/macOS）</li>
+                            <li data-zh="下载一个PE系统，并把PE系统安装至C盘，重启进入" data-en="Download a PE system, install it to C drive, reboot and enter">下载一个PE系统，并把PE系统安装至C盘，重启进入</li>
+                            <li data-zh="按照PE提供的安装工具的安装向导操作" data-en="Follow the installation wizard of the PE system's installation tool">按照PE提供的安装工具的安装向导操作</li>
+                            <li data-zh="等待安装完成（比烧制一组铁矿快一点）" data-en="Wait for installation to complete (faster than smelting a stack of iron ore)">等待安装完成（比烧制一组铁矿快一点）</li>
+                            <li data-zh="启动系统，开始你的方块冒险！" data-en="Start the system and begin your block adventure!">启动系统，开始你的方块冒险！</li>
+                        </ol>
+                        <p class="mt-2 text-minecraft-yellow"><i class="fa-solid fa-lightbulb mr-1"></i> <span data-zh="提示：安装前请确保你的电脑满足最低配置要求，就像探险前准备好装备一样。" data-en="Tip: Make sure your computer meets the minimum requirements before installation, just like preparing equipment before an adventure.">提示：安装前请确保你的电脑满足最低配置要求，就像探险前准备好装备一样。</span></p>
+                    </div>
+                </div>
+                
+                <div class="faq-card">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span data-zh="系统运行卡顿怎么办？" data-en="What to do if the system runs sluggishly?">系统运行卡顿怎么办？</span>
+                        <i class="fa-solid fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="mb-2" data-zh="如果系统像爬行者一样卡顿，可以尝试以下方法：" data-en="If the system is lagging like a creeper, try the following methods:">如果系统像爬行者一样卡顿，可以尝试以下方法：</p>
+                        <ul class="list-disc list-inside space-y-1 ml-2">
+                            <li data-zh="关闭不必要的后台程序（清理背包）" data-en="Close unnecessary background programs (clean inventory)">关闭不必要的后台程序（清理背包）</li>
+                            <li data-zh="降低图形设置，就像把渲染距离调小一样" data-en="Reduce graphics settings, like decreasing render distance">降低图形设置，就像把渲染距离调小一样</li>
+                            <li data-zh="确保你的电脑满足推荐配置要求" data-en="Ensure your computer meets recommended requirements">确保你的电脑满足推荐配置要求</li>
+                            <li data-zh="更新显卡驱动，就像给工具附魔一样" data-en="Update graphics drivers, like enchanting tools">更新显卡驱动，就像给工具附魔一样</li>
+                            <li data-zh="重启系统，有时候就像重新生成世界一样有效" data-en="Restart the system, sometimes effective like regenerating the world">重启系统，有时候就像重新生成世界一样有效</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="faq-card">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span data-zh="如何连接到我的世界服务器？" data-en="How to connect to Minecraft servers?">如何连接到我的世界服务器？</span>
+                        <i class="fa-solid fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="mb-2" data-zh="连接服务器比找到村庄还容易：" data-en="Connecting to servers is easier than finding a village:">连接服务器比找到村庄还容易：</p>
+                        <ol class="list-decimal list-inside space-y-1 ml-2">
+                            <li data-zh="打开PCL社区版，点击联机板块" data-en="Open PCL community edition, click multiplayer section">打开PCL社区版，点击联机板块</li>
+                            <li data-zh="创建服务器IP地址和端口，就像输入坐标一样（前提游戏和存档是开着的）" data-en="Create server IP address and port, like entering coordinates (game and save must be open)">创建服务器IP地址和端口，就像输入坐标一样（前提游戏和存档是开着的）</li>
+                            <li data-zh="点击'创建服务器'按钮" data-en="Click 'Create Server' button">点击"创建服务器"按钮</li>
+                            <li data-zh="如果需要，输入服务器密码（就像打开附魔台需要经验一样）" data-en="If needed, enter server password (like needing experience for enchanting table)">如果需要，输入服务器密码（就像打开附魔台需要经验一样）</li>
+                            <li data-zh="等待连接，开始多人游戏冒险！" data-en="Wait for connection, begin multiplayer adventure!">等待连接，开始多人游戏冒险！</li>
+                        </ol>
+                        <p class="mt-2 text-minecraft-yellow"><i class="fa-solid fa-lightbulb mr-1"></i> <span data-zh="提示：PCL的联机功能目前被'封印'了。可能上述方法无法成功创建联机！！" data-en="Note: PCL's multiplayer function is currently 'sealed'. The above method might not successfully create multiplayer!!">提示：PCL的联机功能目前被"封印"了。可能上述方法无法成功创建联机！！</span></p>
+                    </div>
+                </div>
+                
+                <div class="faq-card">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span data-zh="如何安装和管理模组？" data-en="How to install and manage mods?">如何安装和管理模组？</span>
+                        <i class="fa-solid fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="mb-2" data-zh="模组管理系统比合成表还直观：" data-en="Mod management system is more intuitive than crafting recipes:">模组管理系统比合成表还直观：</p>
+                        <ol class="list-decimal list-inside space-y-1 ml-2">
+                            <li data-zh="打开PCL(可以是普通版也可以是社区版)" data-en="Open PCL (can be regular or community edition)">打开PCL(可以是普通版也可以是社区版)</li>
+                            <li data-zh="点击模组/材质光影等板块，添加你喜欢的添加上去" data-en="Click mods/textures/shaders section, add your favorites">点击模组/材质光影等板块，添加你喜欢的添加上去</li>
+                            <li data-zh="添加完成后，在'已安装模组/材质光影'中启用/禁用" data-en="After adding, enable/disable in 'Installed Mods/Textures/Shaders'">添加完成后，在"已安装模组/材质光影"中启用/禁用</li>
+                            <li data-zh="重启我的世界游戏使模组生效" data-en="Restart Minecraft game for mods to take effect">重启我的世界游戏使模组生效</li>
+                        </ol>
+                        <p class="mt-2 text-minecraft-red"><i class="fa-solid fa-exclamation-triangle mr-1"></i> <span data-zh="警告：安装的模组需要对应版本号，否则结果你是知道的..." data-en="Warning: Installed mods must match version numbers, otherwise you know the result...">警告：安装的模组需要对应版本号，否则结果你是知道的...</span></p>
+                    </div>
+                </div>
+                
+                <div class="faq-card">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span data-zh="忘记密码了怎么办？" data-en="What to do if I forget my password?">忘记密码了怎么办？</span>
+                        <i class="fa-solid fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="mb-2" data-zh="忘记密码也有办法：" data-en="There's also a way for forgotten passwords:">忘记密码也有办法：</p>
+                        <ol class="list-decimal list-inside space-y-1 ml-2">
+                            <li data-zh="在登录界面点击右下角轻松使用板块，点击破解/更改密码" data-en="Click ease of use section at bottom right on login screen, click crack/change password">在登录界面点击右下角轻松使用板块，点击破解/更改密码</li>
+                            <li data-zh="输入你的新密码" data-en="Enter your new password">输入你的新密码</li>
+                            <li data-zh="检查密码是否有误" data-en="Check if password is correct">检查密码是否有误</li>
+                            <li data-zh="按下键盘任意键即可使用新密码" data-en="Press any key to use new password">按下键盘任意键即可使用新密码</li>
+                            <li data-zh="使用新密码登录" data-en="Log in with new password">使用新密码登录</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="faq-card">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span data-zh="系统支持哪些版本的Minecraft？" data-en="Which Minecraft versions does the system support?">系统支持哪些版本的Minecraft？</span>
+                        <i class="fa-solid fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="mb-2" data-zh="我们的系统就像兼容各种方块一样，支持多个版本：" data-en="Our system supports multiple versions, just like being compatible with various blocks:">我们的系统就像兼容各种方块一样，支持多个版本：</p>
+                        <ul class="list-disc list-inside space-y-1 ml-2">
+                            <li data-zh="我的世界 Java版 1.x.x-1.21.11" data-en="Minecraft Java Edition 1.x.x-1.21.11">我的世界 Java版 1.x.x-1.21.11</li>
+                            <li data-zh="我的世界 基岩版 1.x.x-26.0.x" data-en="Minecraft Bedrock Edition 1.x.x-26.0.x">我的世界 基岩版 1.x.x-26.0.x</li>
+                            <li data-zh="我的世界 教育版" data-en="Minecraft Education Edition">我的世界 教育版</li>
+                        </ul>
+                        <p class="mt-2 text-minecraft-yellow"><i class="fa-solid fa-lightbulb mr-1"></i> <span data-zh="提示：系统会自动检测并适配你安装的Minecraft版本，就像自动拾取掉落物一样方便。" data-en="Tip: The system automatically detects and adapts to your installed Minecraft version, as convenient as auto-picking up dropped items.">提示：系统会自动检测并适配你安装的Minecraft版本，就像自动拾取掉落物一样方便。</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16 max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8 text-center text-minecraft-green minecraft-text-shadow" data-zh="故障排除指南" data-en="Troubleshooting Guide">故障排除指南</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="feature-card">
+                    <div class="w-12 h-12 bg-minecraft-yellow pixel-border flex items-center justify-center mb-3">
+                        <i class="fa-solid fa-volume-xmark text-black text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2" data-zh="没有声音" data-en="No Sound">没有声音</h3>
+                    <p class="mb-2" data-zh="系统静音了？那就看看是不是没装驱动就开始玩了：" data-en="System muted? Check if you started playing without drivers:">系统静音了？那就看看是不是没装驱动就开始玩了：</p>
+                    <ul class="list-disc list-inside text-sm space-y-1">
+                        <li data-zh="检查音量设置是否开启" data-en="Check if volume settings are enabled">检查音量设置是否开启</li>
+                        <li data-zh="更新音频驱动" data-en="Update audio drivers">更新音频驱动</li>
+                        <li data-zh="确认音频设备连接正常" data-en="Confirm audio device connection is normal">确认音频设备连接正常</li>
+                        <li data-zh="在设置中重新选择音频输出" data-en="Reselect audio output in settings">在设置中重新选择音频输出</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="w-12 h-12 bg-minecraft-blue pixel-border flex items-center justify-center mb-3">
+                        <i class="fa-solid fa-wifi-slash text-black text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2" data-zh="网络问题" data-en="Network Issues">网络问题</h3>
+                    <p class="mb-2" data-zh="连不上服务器？是不是有想把路由器摔了的决定？" data-en="Can't connect to server? Feeling like smashing the router?">连不上服务器？是不是有想把路由器摔了的决定？</p>
+                    <ul class="list-disc list-inside text-sm space-y-1">
+                        <li data-zh="检查网络连接" data-en="Check network connection">检查网络连接</li>
+                        <li data-zh="验证服务器地址是否正确" data-en="Verify server address is correct">验证服务器地址是否正确</li>
+                        <li data-zh="关闭VPN/代理" data-en="Turn off VPN/proxy">关闭VPN/代理</li>
+                        <li data-zh="检查防火墙设置" data-en="Check firewall settings">检查防火墙设置</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16 max-w-4xl mx-auto">
+            <div class="content-box">
+                <h2 class="text-3xl font-bold mb-6 text-center text-minecraft-green minecraft-text-shadow" data-zh="需要更多帮助？" data-en="Need More Help?">需要更多帮助？</h2>
+                <p class="text-lg mb-8 text-center" data-zh="如果这些解决方案还不够，那么...加入群聊或与开发者进行私下沟通！" data-en="If these solutions aren't enough, then... join group chat or communicate privately with developers!">如果这些解决方案还不够，那么...加入群聊或与开发者进行私下沟通！</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-gray-800/90 pixel-border p-4 text-center">
+                        <i class="fa-brands fa-qq text-4xl text-minecraft-green mb-3"></i>
+                        <h3 class="text-xl font-bold mb-2" data-zh="加入群聊" data-en="Join Group Chat">加入群聊</h3>
+                        <p class="mb-4" data-zh="加入群聊，一切反馈都还来得及！" data-en="Join group chat, all feedback is still timely!">加入群聊，一切反馈都还来得及！</p>
+                        <a href="https://qm.qq.com/q/2CebDBWtBu" class="btn-pixel px-4 py-2 inline-block">
+                            <i class="fa-brands fa-qq mr-1"></i>
+                            <span data-zh="点击加入，参与开发！" data-en="Click to Join, Participate in Development!">点击加入，参与开发！</span>
+                        </a>
+                    </div>
+                    
+                    <div class="bg-gray-800/90 pixel-border p-4">
+                        <div class="text-center mb-4">
+                            <i class="fa-solid fa-envelope text-4xl text-minecraft-green mb-3"></i>
+                            <h3 class="text-xl font-bold mb-2" data-zh="邮件反馈" data-en="Email Feedback">邮件反馈</h3>
+                            <p class="mb-4" data-zh="填写下方表单，发送你的问题给我们（看不见字体很正常，因为有时候字体颜色会重叠...）" data-en="Fill the form below, send your questions to us (can't see text? normal, sometimes text colors overlap...)">填写下方表单，发送你的问题给我们（看不见字体很正常，因为有时候字体颜色会重叠...）</p>
+                        </div>
+                        
+                        <form id="feedbackForm" class="space-y-4">
+                            <div>
+                                <label for="userEmail" class="block text-sm font-bold mb-1 text-minecraft-yellow">
+                                    <i class="fa-solid fa-user mr-1"></i> <span data-zh="你的邮箱" data-en="Your Email">你的邮箱</span>
+                                </label>
+                                <input 
+                                    type="email" 
+                                    id="userEmail" 
+                                    class="input-pixel" 
+                                    placeholder="输入你的邮箱地址，方便我们回复你"
+                                    data-zh-placeholder="输入你的邮箱地址，方便我们回复你"
+                                    data-en-placeholder="Enter your email address so we can reply"
+                                    required
+                                >
+                            </div>
+                            
+                            <div>
+                                <label for="feedbackSubject" class="block text-sm font-bold mb-1 text-minecraft-yellow">
+                                    <i class="fa-solid fa-tag mr-1"></i> <span data-zh="问题标题" data-en="Issue Title">问题标题</span>
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="feedbackSubject" 
+                                    class="input-pixel" 
+                                    placeholder="简要描述你的问题（如：安装失败）"
+                                    data-zh-placeholder="简要描述你的问题（如：安装失败）"
+                                    data-en-placeholder="Briefly describe your issue (e.g.: Installation Failed)"
+                                    required
+                                >
+                            </div>
+                            
+                            <div>
+                                <label for="feedbackMessage" class="block text-sm font-bold mb-1 text-minecraft-yellow">
+                                    <i class="fa-solid fa-comment mr-1"></i> <span data-zh="问题详情" data-en="Issue Details">问题详情</span>
+                                </label>
+                                <textarea 
+                                    id="feedbackMessage" 
+                                    class="input-pixel h-32 resize-none" 
+                                    placeholder="详细描述你遇到的问题，就像描述你找到的钻石矿脉一样详细..."
+                                    data-zh-placeholder="详细描述你遇到的问题，就像描述你找到的钻石矿脉一样详细..."
+                                    data-en-placeholder="Describe your issue in detail, like describing a diamond vein you found..."
+                                    required
+                                ></textarea>
+                            </div>
+                            
+                            <div class="text-center">
+                                <button type="submit" class="btn-pixel px-6 py-2">
+                                    <i class="fa-solid fa-paper-plane mr-1"></i> <span data-zh="发送反馈" data-en="Send Feedback">发送反馈</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <p class="text-gray-300 mb-4"><i class="fa-solid fa-clock mr-1"></i> <span data-zh="支持时间：每天（并非每天）" data-en="Support Hours: Daily (Not Actually Daily)">支持时间：每天（并非每天）</span></p>
+                    <p class="text-minecraft-yellow"><i class="fa-solid fa-star mr-1"></i> <span data-zh="我们通常会在群聊内回复，所以建议加入群聊反馈。" data-en="We usually reply in group chat, so join group chat for feedback.">我们通常会在群聊内回复，所以建议加入群聊反馈。</span></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center mb-16">
+            <div class="content-box inline-block">
+                <h2 class="text-3xl font-bold mb-6 text-minecraft-green minecraft-text-shadow" data-zh="问题解决了吗？" data-en="Problem Solved?">问题解决了吗？</h2>
+                <p class="text-lg mb-8 max-w-2xl mx-auto" data-zh="准备好继续你的方块冒险了吗？回到下载页面，开始使用我的世界操作系统！" data-en="Ready to continue your block adventure? Return to download page and start using Minecraft OS!">准备好继续你的方块冒险了吗？回到下载页面，开始使用我的世界操作系统！</p>
+                <a href="index.html" class="btn-pixel px-8 py-4 text-xl inline-flex items-center animate-pulse-glow">
+                    <i class="fa-solid fa-arrow-left mr-2"></i> <span data-zh="回到下载界面" data-en="Back to Download">回到下载界面</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="pixel-border">
+        <div class="container mx-auto px-4 py-8">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center mb-3">
+                        <div class="w-8 h-8 bg-minecraft-green pixel-border flex items-center justify-center mr-2">
+                            <i class="fa-solid fa-cube text-black"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-minecraft-green minecraft-text-shadow">我的世界操作系统</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 max-w-xs" data-zh="为真正的矿工和冒险家打造的操作系统！比附魔钻石镐还好用！" data-en="An operating system built for true miners and adventurers! Better than an enchanted diamond pickaxe!">
+                        为真正的矿工和冒险家打造的操作系统！比附魔钻石镐还好用！
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h4 class="font-bold mb-3 text-minecraft-green minecraft-text-shadow"><i class="fa-solid fa-link mr-1"></i> <span data-zh="链接" data-en="Links">链接</span></h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="index.html" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-arrow-left mr-1"></i> <span data-zh="回到下载界面" data-en="Back to Download">回到下载界面</span></a></li>
+                            <li><a href="https://space.bilibili.com/3546636693277438" class="hover:text-minecraft-green transition-colors"><i class="fa-brands fa-bilibili mr-1"></i> <span data-zh="个人空间" data-en="Personal Space">个人空间</span></a></li>
+                            <li><a href="https://www.douyin.com/user/MS4wLjABAAAANr9qPx26QqoSkeXNmLx8uhxwcjYo8wg9wDSEvlpe5nE?from_tab_name=main" class="hover:text-minecraft-green transition-colors"><i class="fa-brands fa-tiktok mr-1"></i> <span data-zh="个人空间(Douyin)" data-en="Personal Space(Douyin)">个人空间(Douyin)</span></a></li>
+                            <li><a href="mcpe.html" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-download mr-1"></i> <span data-zh="下载Minecraft_PE" data-en="Download Minecraft_PE">下载Minecraft_PE</span></a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-3 text-minecraft-green minecraft-text-shadow"><i class="fa-solid fa-life-ring mr-1"></i> <span data-zh="支持" data-en="Support">支持</span></h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="help.html" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-circle-info mr-1"></i> <span data-zh="帮助中心" data-en="Help Center">帮助中心</span></a></li>
+                            <li><a href="#" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-comments mr-1"></i> <span data-zh="社区论坛" data-en="Community Forum">社区论坛</span></a></li>
+                            <li><a href="#" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-envelope mr-1"></i> <span data-zh="联系我们" data-en="Contact Us">联系我们</span></a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-3 text-minecraft-green minecraft-text-shadow"><i class="fa-solid fa-scale-balanced mr-1"></i> <span data-zh="法律" data-en="Legal">法律</span></h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="Readme.html" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-shield mr-1"></i> <span data-zh="隐私政策" data-en="Privacy Policy">隐私政策</span></a></li>
+                            <li><a href="Readme.html" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-file-contract mr-1"></i> <span data-zh="使用条款" data-en="Terms of Use">使用条款</span></a></li>
+                            <li><a href="#" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-copyright mr-1"></i> <span data-zh="版权信息" data-en="Copyright Info">版权信息</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-sm text-gray-400">
+                <p><i class="fa-solid fa-triangle-exclamation mr-1"></i> <span data-zh="我的世界操作系统是一个非官方的社区项目，与Mojang Studios没有关联。" data-en="Minecraft OS is an unofficial community project, not affiliated with Mojang Studios.">我的世界操作系统是一个非官方的社区项目，与Mojang Studios没有关联。</span></p>
+                <p class="mt-2"><i class="fa-solid fa-trademark mr-1"></i> <span data-zh="Minecraft是Mojang Studios的商标。本网站不隶属于Mojang Studios。" data-en="Minecraft is a trademark of Mojang Studios. This site is not affiliated with Mojang Studios.">Minecraft是Mojang Studios的商标。本网站不隶属于Mojang Studios。</span></p>
+                <p class="mt-2"><i class="fa-solid fa-skull-crossbones mr-1"></i> <span data-zh="警告：使用本系统可能导致您不想回到现实世界！" data-en="Warning: Using this system may cause you to not want to return to the real world!">警告：使用本系统可能导致您不想回到现实世界！</span></p>
+            </div>
+            
+            <div class="mt-6 text-center">
+                <a href="helpold.html" class="inline-flex items-center text-gray-400 hover:text-minecraft-green transition-colors">
+                    <i class="fa-solid fa-clock-rotate-left mr-2"></i>
+                    <span data-zh="退回旧版UI" data-en="Revert to Old UI">退回旧版UI</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentLanguage = 'zh';
+
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('.faq-icon');
+            
+            if (answer.classList.contains('active')) {
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+                answer.offsetHeight;
+                answer.style.maxHeight = '0';
+                answer.style.opacity = '0';
+                answer.style.paddingTop = '0';
+                answer.style.paddingBottom = '0';
+                setTimeout(() => {
+                    answer.classList.remove('active');
+                }, 10);
+            } else {
+                answer.classList.add('active');
+                answer.style.maxHeight = '2000px';
+                answer.style.opacity = '1';
+                answer.style.paddingTop = '1rem';
+                answer.style.paddingBottom = '1rem';
+            }
+            
+            icon.classList.toggle('active');
+        }
+
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            const elements = document.querySelectorAll('[data-zh], [data-en]');
+            elements.forEach(element => {
+                const text = element.getAttribute(`data-${lang}`);
+                if (text) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        const placeholderAttr = `data-${lang}-placeholder`;
+                        if (element.hasAttribute(placeholderAttr)) {
+                            element.placeholder = element.getAttribute(placeholderAttr);
+                        }
+                    } else {
+                        element.textContent = text;
+                    }
+                }
+            });
+            
+            const toggleBtn = document.getElementById('languageToggle');
+            if (toggleBtn) {
+                if (lang === 'zh') {
+                    toggleBtn.innerHTML = '<i class="fa-solid fa-globe mr-1"></i> English';
+                } else {
+                    toggleBtn.innerHTML = '<i class="fa-solid fa-globe mr-1"></i> 中文';
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstFaq = document.querySelector('.faq-question');
+            if (firstFaq) {
+                setTimeout(() => {
+                    toggleFaq(firstFaq);
+                }, 300);
+            }
+            
+            const languageToggle = document.getElementById('languageToggle');
+            if (languageToggle) {
+                languageToggle.addEventListener('click', function() {
+                    if (currentLanguage === 'zh') {
+                        switchLanguage('en');
+                    } else {
+                        switchLanguage('zh');
+                    }
+                });
+            }
+            
+            const feedbackForm = document.getElementById('feedbackForm');
+            feedbackForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const userEmail = document.getElementById('userEmail').value;
+                const feedbackSubject = document.getElementById('feedbackSubject').value;
+                const feedbackMessage = document.getElementById('feedbackMessage').value;
+                
+                const mailtoLink = `mailto:support@mc-os.com?subject=${encodeURIComponent('我的世界操作系统反馈：' + feedbackSubject)}&body=${encodeURIComponent(`发件人邮箱：${userEmail}\n\n问题详情：\n${feedbackMessage}`)}`;
+                
+                window.location.href = mailtoLink;
+                feedbackForm.reset();
+                
+                if (currentLanguage === 'zh') {
+                    alert('邮件客户端已打开，请确认并发送你的反馈！就像发送一组钻石给我们一样💎');
+                } else {
+                    alert('Email client opened, please confirm and send your feedback! Like sending us a stack of diamonds 💎');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

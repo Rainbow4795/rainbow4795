@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的世界操作系统 - 下载</title>
+    <link rel="icon" type="image/x-icon" href="https://mc.163.com/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        minecraft: {
+                            green: '#7CFC00',
+                            darkgreen: '#228B22',
+                            brown: '#8B4513',
+                            sand: '#F4A460',
+                            stone: '#A9A9A9',
+                            dirt: '#CD853F',
+                            wood: '#DEB887',
+                            blue: '#1E90FF',
+                            red: '#FF6347',
+                            yellow: '#FFD700'
+                        }
+                    },
+                    fontFamily: {
+                        minecraft: ['Minecraft', 'monospace']
+                    },
+                    animation: {
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+                        'bounce-glow': 'bounce-glow 2s ease-in-out infinite',
+                        'spin-slow': 'spin 3s linear infinite',
+                        'pixel-pulse': 'pixel-pulse 1.5s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        'pulse-glow': {
+                            '0%, 100%': { boxShadow: '0 0 5px rgba(124, 252, 0, 0.5)' },
+                            '50%': { boxShadow: '0 0 20px rgba(124, 252, 0, 0.8), 0 0 30px rgba(124, 252, 0, 0.6)' }
+                        },
+                        'bounce-glow': {
+                            '0%, 100%': { 
+                                transform: 'translateY(0)',
+                                boxShadow: '0 0 5px rgba(124, 252, 0, 0.5)'
+                            },
+                            '50%': { 
+                                transform: 'translateY(-10px)',
+                                boxShadow: '0 0 20px rgba(124, 252, 0, 0.8), 0 0 30px rgba(124, 252, 0, 0.6)'
+                            }
+                        },
+                        'pixel-pulse': {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.05)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .pixel-border {
+                border-width: 4px;
+                border-style: solid;
+                border-color: #fff #666 #666 #fff;
+            }
+            .pixel-border-reverse {
+                border-width: 4px;
+                border-style: solid;
+                border-color: #666 #fff #fff #666;
+            }
+            .btn-pixel {
+                @apply pixel-border bg-minecraft-green hover:bg-minecraft-darkgreen text-black font-bold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg;
+            }
+            .btn-pixel-secondary {
+                @apply pixel-border bg-minecraft-yellow hover:bg-yellow-500 text-black font-bold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg;
+            }
+            .feature-card {
+                @apply bg-gray-800/90 pixel-border p-4 hover:scale-105 transition-transform duration-300;
+            }
+            .pixel-cursor {
+                cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgBAMAAACBVGfHAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAnUExURQAAAA4/NgglIKT98CvHrDPryxVjVR6Kd2hOHkk2FSgeC4lnJ////z+CzEgAAAABdFJOUwBA5thmAAAAAWJLR0QMgbNRYwAAAAd0SU1FB+kLBw0aAzZk0XAAAABrSURBVCjPnc9REYAgEATQq7AVtgIVrHAVqEAFKlCBCpYTUUcBAcf7uI83ezezAkCKaYDGYAZLKQ18imgd0X8RRa7Rg1Ng+5DEKR2kD0msG4Pw+fINCNCHARCkxDUMgPuO/u5bw+V2CsdpARs21yTtSf+dVAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNS0xMS0wN1QxMzoyNjowMStwMDowMCLQnJkAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjUtMTEtMDdUMTM6MjY6MDErMDA6MDDlL2cXAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI1LTExLTA3VDEzOjI2OjAxKzAwOjAwb5fL1wAAAABJRU5ErkJggg=='), auto;
+            }
+            .content-box {
+                @apply bg-gray-900/80 pixel-border p-6 backdrop-blur-sm;
+            }
+        }
+    </style>
+    <style>
+        @font-face {
+            font-family: 'Minecraft';
+            src: local('Minecraft'), url('https://download.zoho.com.cn/v1/workdrive/download/yjkvsba4e10f4680f4777a34d4ada277cec63') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }
+        
+        body {
+            font-family: 'Minecraft', monospace;
+            image-rendering: pixelated;
+            background-image: url('https://p2.itc.cn/q_70/images03/20230529/7c9160cea7de4dde872479179c74b46f.png');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: rgba(0, 0, 0, 0.7);
+            background-blend-mode: overlay;
+        }
+        
+        .pixel-art {
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .version-tab {
+            transition: all 0.2s ease;
+        }
+        
+        .version-tab.active {
+            background-color: #7CFC00;
+            color: #000;
+        }
+        
+        header, footer {
+            background-color: rgba(30, 30, 30, 0.9);
+            backdrop-filter: blur(4px);
+        }
+        
+        .minecraft-text-shadow {
+            text-shadow: 2px 2px 0 #000;
+        }
+        
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body class="text-white pixel-cursor">
+    <div class="language-switcher">
+        <button id="languageToggle" class="btn-pixel px-3 py-1 text-sm">
+            <i class="fa-solid fa-globe mr-1"></i> English
+        </button>
+    </div>
+
+    <header class="pixel-border mb-8">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="https://mc.163.com" target="_blank" class="mr-3">
+                    <div class="w-10 h-10 bg-minecraft-green pixel-border flex items-center justify-center animate-pulse-glow">
+                        <img src="https://mc.163.com/favicon.ico" alt="Minecraft Logo" class="w-8 h-8">
+                    </div>
+                </a>
+                <h1 class="text-2xl font-bold text-minecraft-green minecraft-text-shadow" data-zh="我的世界操作系统" data-en="Minecraft OS">我的世界操作系统</h1>
+            </div>
+            <nav class="hidden md:flex space-x-6">
+                <a href="https://space.bilibili.com/3546636693277438" target="_blank" class="hover:text-minecraft-green transition-colors"><i class="fa-brands fa-bilibili mr-1"></i> <span data-zh="个人空间" data-en="Personal Space">个人空间</span></a>
+                <a href="https://www.douyin.com/user/MS4wLjABAAAANr9qPx26QqoSkeXNmLx8uhxwcjYo8wg9wDSEvlpe5nE?from_tab_name=main" class="hover:text-minecraft-green transition-colors"><i class="fa-brands fa-tiktok mr-1"></i> <span data-zh="个人空间(Douyin)" data-en="Personal Space(Tiktok)">个人空间(Douyin)</span></a>
+                <a href="mcpe.html" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-download mr-1"></i> <span data-zh="下载Minecraft_PE" data-en="Download Minecraft_PE">下载Minecraft_PE</span></a>
+                <a href="#" class="text-minecraft-green font-bold"><i class="fa-solid fa-download mr-1"></i> <span data-zh="下载" data-en="Download">下载</span></a>
+                <a href="#" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-list-check mr-1"></i> <span data-zh="功能特性" data-en="Features">功能特性</span></a>
+                <a href="#" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-images mr-1"></i> <span data-zh="截图展示" data-en="Screenshots">截图展示</span></a>
+                <a href="help.html" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-circle-question mr-1"></i> <span data-zh="支持" data-en="Support">支持</span></a>
+            </nav>
+            <button class="md:hidden text-2xl">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4">
+        <section class="mb-16 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-8 md:mb-0">
+                <div class="content-box">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 text-minecraft-green minecraft-text-shadow" data-zh="下载我的世界操作系统" data-en="Download Minecraft OS">下载我的世界操作系统</h2>
+                    <p class="text-lg mb-6" data-zh="告别卡顿和崩溃！我们的方块操作系统让您的电脑比苦力怕爆炸后的地面还要平滑！" data-en="Say goodbye to lag and crashes! Our block operating system makes your computer smoother than the ground after a creeper explosion!">告别卡顿和崩溃！我们的方块操作系统让您的电脑比苦力怕爆炸后的地面还要平滑！</p>
+                    
+                    <div class="flex flex-wrap mb-6 border-b-2 border-gray-700">
+                        <button class="version-tab active px-4 py-2 pixel-border mr-2 mb-2 animate-pulse-glow"><i class="fa-solid fa-gem mr-1"></i> <span data-zh="最新版 (1.20.1) - 稳如基岩" data-en="Latest (1.20.1) - Stable as Bedrock">最新版 (1.20.1) - 稳如基岩</span></button>
+                        <button class="version-tab px-4 py-2 pixel-border mr-2 mb-2"><i class="fa-solid fa-flask mr-1"></i> <span data-zh="测试版 (1.21) - 有点冒险" data-en="Beta (1.21) - A Bit Risky">测试版 (1.21) - 有点冒险</span></button>
+                        <button class="version-tab px-4 py-2 pixel-border mb-2"><i class="fa-solid fa-clock-rotate-left mr-1"></i> <span data-zh="旧版本 (1.19) - 怀旧经典" data-en="Old Version (1.19) - Nostalgic Classic">旧版本 (1.19) - 怀旧经典</span></button>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-4 mb-4">
+                        <a href="https://www.123865.com/s/Swq2Td-Dce9A" target="_blank" class="btn-pixel px-6 py-3 flex items-center animate-bounce-glow">
+                            <i class="fa-brands fa-windows mr-2"></i> <span data-zh="Windows (主链接)" data-en="Windows (Main Link)">Windows (主链接)</span>
+                        </a>
+                        <a href="https://docs.qq.com/doc/DU3FpdmVFdGR1V3Zk?u=60e52c08104f4862a4c5adc174109c76&nlc=1" target="_blank" class="btn-pixel px-6 py-3 flex items-center animate-bounce-glow" style="animation-delay: 0.2s;">
+                            <i class="fa-brands fa-apple mr-2"></i> <span data-zh="macOS" data-en="macOS">macOS</span>
+                        </a>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-gray-800/70 pixel-border">
+                        <div class="flex items-center mb-2">
+                            <i class="fa-solid fa-shield-alt text-minecraft-yellow mr-2"></i>
+                            <h3 class="text-lg font-bold text-minecraft-yellow" data-zh="备用下载链接" data-en="Backup Download Link">备用下载链接</h3>
+                        </div>
+                        <p class="text-sm text-gray-300 mb-3" data-zh="如果主链接无法访问，请使用以下备用下载链接：" data-en="If main link is unavailable, use this backup download link:">如果主链接无法访问，请使用以下备用下载链接：</p>
+                        <a href="https://files.zohopublic.com.cn/public/workdrive-public/download/yjkvsbcaa516d906d42f1a5165035fb6dbb77" target="_blank" class="btn-pixel-secondary px-6 py-3 flex items-center w-full justify-center">
+                            <i class="fa-solid fa-download mr-2"></i> <span data-zh="Windows 备用下载" data-en="Windows Backup Download">Windows 备用下载</span>
+                        </a>
+                    </div>
+                    
+                    <p class="mt-4 text-sm text-gray-300">
+                        <i class="fa-solid fa-shield-check mr-1"></i> <span data-zh="已验证 & 安全 | 移除了 Herobrine" data-en="Verified & Secure | Herobrine Removed">已验证 & 安全 | 移除了 Herobrine</span>
+                        <i class="fa-solid fa-clock mr-1 ml-2"></i> <span data-zh="最后更新: 2026年1月10日" data-en="Last Updated: January 10, 2026">最后更新: 2026年1月10日</span>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="md:w-1/2 flex justify-center">
+                <div class="relative">
+                    <div class="w-64 h-64 md:w-80 md:h-80 bg-minecraft-blue pixel-border animate-float">
+                        <div class="absolute inset-4 bg-gray-800 pixel-border flex items-center justify-center">
+                            <div class="w-32 h-32 md:w-48 md:h-48 bg-minecraft-green pixel-border flex items-center justify-center animate-pixel-pulse">
+                                <i class="fa-solid fa-cube text-6xl md:text-8xl text-black"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-4 -right-4 bg-yellow-500 pixel-border px-3 py-1 text-black font-bold rotate-3 animate-pulse-glow">
+                        <i class="fa-solid fa-star mr-1"></i> <span data-zh="新发布! 比钻石还闪亮!" data-en="New Release! Shinier than Diamond!">新发布! 比钻石还闪亮!</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-6 text-center text-minecraft-green minecraft-text-shadow" data-zh="系统要求" data-en="System Requirements">系统要求</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="content-box">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fa-solid fa-check-circle text-minecraft-green mr-2"></i> <span data-zh="最低配置要求" data-en="Minimum Requirements">最低配置要求</span>
+                    </h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-microchip text-gray-400 mt-1 mr-3"></i>
+                            <span data-zh="处理器: Intel Core i3 / AMD Ryzen 3" data-en="CPU: Intel Core i3 / AMD Ryzen 3">处理器: Intel Core i3 / AMD Ryzen 3</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-memory text-gray-400 mt-1 mr-3"></i>
+                            <span data-zh="内存: 4 GB" data-en="RAM: 4 GB">内存: 4 GB</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-hard-drive text-gray-400 mt-1 mr-3"></i>
+                            <span data-zh="存储空间: 10 GB 可用空间" data-en="Storage: 10 GB Free Space">存储空间: 10 GB 可用空间</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-display text-gray-400 mt-1 mr-3"></i>
+                            <span data-zh="显卡: Intel HD Graphics 4000 / AMD Radeon R5" data-en="GPU: Intel HD Graphics 4000 / AMD Radeon R5">显卡: Intel HD Graphics 4000 / AMD Radeon R5</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-brands fa-windows text-gray-400 mt-1 mr-3"></i>
+                            <span data-zh="操作系统: Windows 10 / macOS 11" data-en="OS: Windows 10 / macOS 11">操作系统: Windows 10 / macOS 11</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="content-box">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fa-solid fa-rocket text-minecraft-green mr-2"></i> <span data-zh="推荐配置要求" data-en="Recommended Requirements">推荐配置要求</span>
+                    </h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-microchip text-gray-400 mt-1 mr-3"></i>
+                            <span data-zh="处理器: Intel Core i5 / AMD Ryzen 5" data-en="CPU: Intel Core i5 / AMD Ryzen 5">处理器: Intel Core i5 / AMD Ryzen 5</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-memory text-gray-400 mt-1 mr-3"></i>
+                            <span data-zh="内存: 8 GB" data-en="RAM: 8 GB">内存: 8 GB</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-hard-drive text-gray-400 mt-1 mr-3"></i>
+                            <span data-zh="存储空间: 20 GB SSD" data-en="Storage: 20 GB SSD">存储空间: 20 GB SSD</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-display text-gray-400 mt-1 mr-3"></i>
+                            <span data-zh="显卡: NVIDIA GTX 1050 / AMD RX 560" data-en="GPU: NVIDIA GTX 1050 / AMD RX 560">显卡: NVIDIA GTX 1050 / AMD RX 560</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-wifi text-gray-400 mt-1 mr-3"></i>
+                            <span data-zh="网络: 宽带连接" data-en="Network: Broadband Connection">网络: 宽带连接</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-center text-minecraft-green minecraft-text-shadow" data-zh="为什么选择我的世界操作系统?" data-en="Why Choose Minecraft OS?">为什么选择我的世界操作系统?</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="feature-card">
+                    <div class="w-12 h-12 bg-minecraft-green pixel-border flex items-center justify-center mb-3">
+                        <i class="fa-solid fa-bolt text-black text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2" data-zh="闪电般的速度" data-en="Lightning Fast Speed">闪电般的速度</h3>
+                    <p data-zh="加载速度比被骷髅射中的箭还快！告别卡顿，享受比创造模式飞行还流畅的体验。" data-en="Loads faster than an arrow shot by a skeleton! Say goodbye to lag, enjoy smoother than creative mode flying.">加载速度比被骷髅射中的箭还快！告别卡顿，享受比创造模式飞行还流畅的体验。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="w-12 h-12 bg-minecraft-green pixel-border flex items-center justify-center mb-3">
+                        <i class="fa-solid fa-cubes text-black text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2" data-zh="内置神奇工具" data-en="Built-in Magic Tools">内置神奇工具</h3>
+                    <p data-zh="自带模组管理器、资源包组织器，还有一键备份功能——比附魔台还神奇！" data-en="Built-in mod manager, resource pack organizer, and one-click backup—more magical than an enchanting table!">自带模组管理器、资源包组织器，还有一键备份功能——比附魔台还神奇！</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="w-12 h-12 bg-minecraft-green pixel-border flex items-center justify-center mb-3">
+                        <i class="fa-solid fa-users text-black text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2" data-zh="联机不再头疼" data-en="Multiplayer Made Easy">联机不再头疼</h3>
+                    <p data-zh="轻松连接服务器，设置自己的服务器比搭个泥土房子还简单！" data-en="Easily connect to servers, set up your own server simpler than building a dirt house!">轻松连接服务器，设置自己的服务器比搭个泥土房子还简单！</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="w-12 h-12 bg-minecraft-green pixel-border flex items-center justify-center mb-3">
+                        <i class="fa-solid fa-paintbrush text-black text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2" data-zh="百变外观" data-en="Customizable Look">百变外观</h3>
+                    <p data-zh="从草原到下界，各种主题任你选，让你的桌面比彩虹羊还多彩！" data-en="From plains to Nether, various themes to choose from, make your desktop more colorful than rainbow sheep!">从草原到下界，各种主题任你选，让你的桌面比彩虹羊还多彩！</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="w-12 h-12 bg-minecraft-green pixel-border flex items-center justify-center mb-3">
+                        <i class="fa-solid fa-shield-halved text-black text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2" data-zh="安全可靠" data-en="Safe and Reliable">安全可靠</h3>
+                    <p data-zh="内置防护系统，比钻石盔甲还能抵御恶意模组的攻击！" data-en="Built-in protection system, better than diamond armor against malicious mods!">内置防护系统，比钻石盔甲还能抵御恶意模组的攻击！</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="w-12 h-12 bg-minecraft-green pixel-border flex items-center justify-center mb-3">
+                        <i class="fa-solid fa-plug text-black text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2" data-zh="海量插件" data-en="Massive Plugins">海量插件</h3>
+                    <p data-zh="数百种社区开发的插件，让你的系统比附魔金苹果还有料！" data-en="Hundreds of community-developed plugins, make your system more loaded than enchanted golden apples!">数百种社区开发的插件，让你的系统比附魔金苹果还有料！</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-center text-minecraft-green minecraft-text-shadow" data-zh="截图展示" data-en="Screenshot Gallery">截图展示</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
+                <div class="pixel-border overflow-hidden hover:scale-[1.01] transition-transform duration-300">
+                    <img src="https://mcsystemdl.netlify.app/Minecraft10pic.png" 
+                         alt="我的世界操作系统桌面与游戏界面" 
+                         class="w-full h-auto pixel-art">
+                </div>
+                <p class="text-center text-gray-300 mt-2"><i class="fa-solid fa-image mr-1"></i> <span data-zh="我的世界操作系统桌面环境与游戏界面展示 - 比末影龙的老巢还要酷炫！" data-en="Minecraft OS desktop environment and game interface - cooler than the Ender Dragon's lair!">我的世界操作系统桌面环境与游戏界面展示 - 比末影龙的老巢还要酷炫！</span></p>
+            </div>
+        </section>
+
+        <section class="text-center mb-16">
+            <div class="content-box inline-block">
+                <h2 class="text-3xl font-bold mb-6 text-minecraft-green minecraft-text-shadow" data-zh="准备好开始方块冒险了吗?" data-en="Ready to Start Your Block Adventure?">准备好开始方块冒险了吗?</h2>
+                <p class="text-lg mb-8 max-w-2xl mx-auto" data-zh="加入全球数百万玩家，他们都已经抛弃了普通系统，选择了比下界合金还强大的我的世界操作系统！" data-en="Join millions of players worldwide who have ditched ordinary systems for Minecraft OS, stronger than Netherite!">加入全球数百万玩家，他们都已经抛弃了普通系统，选择了比下界合金还强大的我的世界操作系统！</p>
+                <div class="flex flex-col md:flex-row gap-4 justify-center">
+                    <a href="https://www.123865.com/s/Swq2Td-Dce9A" target="_blank" class="btn-pixel px-8 py-4 text-xl inline-flex items-center animate-pulse-glow">
+                        <i class="fa-solid fa-download mr-2"></i> <span data-zh="主链接下载 - 免费！" data-en="Main Link Download - Free!">主链接下载 - 免费！</span>
+                    </a>
+                    <a href="https://files.zohopublic.com.cn/public/workdrive-public/download/yjkvsbcaa516d906d42f1a5165035fb6dbb77" target="_blank" class="btn-pixel-secondary px-8 py-4 text-xl inline-flex items-center">
+                        <i class="fa-solid fa-shield-alt mr-2"></i> <span data-zh="备用下载 - 免费！" data-en="Backup Download - Free!">备用下载 - 免费！</span>
+                    </a>
+                </div>
+                <p class="mt-4 text-sm text-gray-300"><i class="fa-solid fa-face-smile-wink mr-1"></i> <span data-zh="不用担心，这些下载按钮后面没有藏着苦力怕！" data-en="Don't worry, no creepers hiding behind these download buttons!">不用担心，这些下载按钮后面没有藏着苦力怕！</span></p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="pixel-border">
+        <div class="container mx-auto px-4 py-8">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center mb-3">
+                        <a href="https://mc.163.com" target="_blank" class="mr-2">
+                            <div class="w-8 h-8 bg-minecraft-green pixel-border flex items-center justify-center">
+                                <img src="https://mc.163.com/favicon.ico" alt="Minecraft Logo" class="w-6 h-6">
+                            </div>
+                        </a>
+                        <h3 class="text-xl font-bold text-minecraft-green minecraft-text-shadow" data-zh="我的世界操作系统" data-en="Minecraft OS">我的世界操作系统</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 max-w-xs" data-zh="为真正的矿工和冒险家打造的操作系统！比附魔钻石镐还好用！" data-en="An operating system built for true miners and adventurers! Better than an enchanted diamond pickaxe!">
+                        为真正的矿工和冒险家打造的操作系统！比附魔钻石镐还好用！
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h4 class="font-bold mb-3 text-minecraft-green minecraft-text-shadow"><i class="fa-solid fa-link mr-1"></i> <span data-zh="链接" data-en="Links">链接</span></h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="https://space.bilibili.com/3546636693277438" class="hover:text-minecraft-green transition-colors"><i class="fa-brands fa-bilibili mr-1"></i> <span data-zh="个人空间" data-en="Personal Space">个人空间</span></a></li>
+                            <li><a href="https://www.douyin.com/user/MS4wLjABAAAANr9qPx26QqoSkeXNmLx8uhxwcjYo8wg9wDSEvlpe5nE?from_tab_name=main" class="hover:text-minecraft-green transition-colors"><i class="fa-brands fa-tiktok mr-1"></i> <span data-zh="个人空间(Douyin)" data-en="Personal Space(Douyin)">个人空间(Douyin)</span></a></li>
+                            <li><a href="#" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-download mr-1"></i> <span data-zh="下载" data-en="Download">下载</span></a></li>
+                            <li><a href="help.html" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-circle-question mr-1"></i> <span data-zh="支持" data-en="Support">支持</span></a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-3 text-minecraft-green minecraft-text-shadow"><i class="fa-solid fa-life-ring mr-1"></i> <span data-zh="支持" data-en="Support">支持</span></h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="help.html" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-circle-info mr-1"></i> <span data-zh="帮助中心" data-en="Help Center">帮助中心</span></a></li>
+                            <li><a href="#" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-comments mr-1"></i> <span data-zh="社区论坛" data-en="Community Forum">社区论坛</span></a></li>
+                            <li><a href="#" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-envelope mr-1"></i> <span data-zh="联系我们" data-en="Contact Us">联系我们</span></a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-3 text-minecraft-green minecraft-text-shadow"><i class="fa-solid fa-scale-balanced mr-1"></i> <span data-zh="法律" data-en="Legal">法律</span></h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="Readme.html" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-shield mr-1"></i> <span data-zh="隐私政策" data-en="Privacy Policy">隐私政策</span></a></li>
+                            <li><a href="Readme.html" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-file-contract mr-1"></i> <span data-zh="使用条款" data-en="Terms of Use">使用条款</span></a></li>
+                            <li><a href="#" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-copyright mr-1"></i> <span data-zh="版权信息" data-en="Copyright Info">版权信息</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-sm text-gray-400">
+                <p><i class="fa-solid fa-triangle-exclamation mr-1"></i> <span data-zh="我的世界操作系统是一个非官方的社区项目，与Mojang Studios没有关联。" data-en="Minecraft OS is an unofficial community project, not affiliated with Mojang Studios.">我的世界操作系统是一个非官方的社区项目，与Mojang Studios没有关联。</span></p>
+                <p class="mt-2"><i class="fa-solid fa-trademark mr-1"></i> <span data-zh="Minecraft是Mojang Studios的商标。本网站不隶属于Mojang Studios。" data-en="Minecraft is a trademark of Mojang Studios. This site is not affiliated with Mojang Studios.">Minecraft是Mojang Studios的商标。本网站不隶属于Mojang Studios。</span></p>
+                <p class="mt-2"><i class="fa-solid fa-skull-crossbones mr-1"></i> <span data-zh="警告：使用本系统可能导致您不想回到现实世界！" data-en="Warning: Using this system may cause you to not want to return to the real world!">警告：使用本系统可能导致您不想回到现实世界！</span></p>
+                <p class="mt-2"><i class="fa-solid fa-certificate mr-1"></i> <span data-zh="网站备案号：京ICP备00000000号-1" data-en="Website Registration: JingICP Bei No. 00000000-1">网站备案号：京ICP备00000000号-1</span></p>
+            </div>
+            
+            <div class="mt-6 text-center">
+                <a href="indexold.html" class="inline-flex items-center text-gray-400 hover:text-minecraft-green transition-colors">
+                    <i class="fa-solid fa-clock-rotate-left mr-2"></i>
+                    <span data-zh="退回旧版UI" data-en="Revert to Old UI">退回旧版UI</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentLanguage = 'zh';
+
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            const elements = document.querySelectorAll('[data-zh], [data-en]');
+            elements.forEach(element => {
+                const text = element.getAttribute(`data-${lang}`);
+                if (text) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        const placeholderAttr = `data-${lang}-placeholder`;
+                        if (element.hasAttribute(placeholderAttr)) {
+                            element.placeholder = element.getAttribute(placeholderAttr);
+                        }
+                    } else {
+                        element.textContent = text;
+                    }
+                }
+            });
+            
+            const toggleBtn = document.getElementById('languageToggle');
+            if (toggleBtn) {
+                if (lang === 'zh') {
+                    toggleBtn.innerHTML = '<i class="fa-solid fa-globe mr-1"></i> English';
+                } else {
+                    toggleBtn.innerHTML = '<i class="fa-solid fa-globe mr-1"></i> 中文';
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.version-tab');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            const languageToggle = document.getElementById('languageToggle');
+            if (languageToggle) {
+                languageToggle.addEventListener('click', function() {
+                    if (currentLanguage === 'zh') {
+                        switchLanguage('en');
+                    } else {
+                        switchLanguage('zh');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

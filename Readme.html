@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目介绍 - 我的世界操作系统下载页面</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        minecraft: {
+                            green: '#7CFC00',
+                            darkgreen: '#228B22',
+                            brown: '#8B4513',
+                            sand: '#F4A460',
+                            stone: '#A9A9A9',
+                            dirt: '#CD853F',
+                            wood: '#DEB887',
+                            blue: '#1E90FF',
+                            red: '#FF6347',
+                            yellow: '#FFD700'
+                        }
+                    },
+                    fontFamily: {
+                        minecraft: ['Minecraft', 'monospace']
+                    },
+                    animation: {
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+                        'bounce-glow': 'bounce-glow 2s ease-in-out infinite',
+                        'spin-slow': 'spin 3s linear infinite',
+                        'pixel-pulse': 'pixel-pulse 1.5s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        'pulse-glow': {
+                            '0%, 100%': { boxShadow: '0 0 5px rgba(124, 252, 0, 0.5)' },
+                            '50%': { boxShadow: '0 0 20px rgba(124, 252, 0, 0.8), 0 0 30px rgba(124, 252, 0, 0.6)' }
+                        },
+                        'bounce-glow': {
+                            '0%, 100%': { 
+                                transform: 'translateY(0)',
+                                boxShadow: '0 0 5px rgba(124, 252, 0, 0.5)'
+                            },
+                            '50%': { 
+                                transform: 'translateY(-10px)',
+                                boxShadow: '0 0 20px rgba(124, 252, 0, 0.8), 0 0 30px rgba(124, 252, 0, 0.6)'
+                            }
+                        },
+                        'pixel-pulse': {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.05)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .pixel-border {
+                border-width: 4px;
+                border-style: solid;
+                border-color: #fff #666 #666 #fff;
+            }
+            .pixel-border-reverse {
+                border-width: 4px;
+                border-style: solid;
+                border-color: #666 #fff #fff #666;
+            }
+            .btn-pixel {
+                @apply pixel-border bg-minecraft-green hover:bg-minecraft-darkgreen text-black font-bold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg;
+            }
+            .feature-card {
+                @apply bg-gray-800/90 pixel-border p-4 hover:scale-105 transition-transform duration-300;
+            }
+            .pixel-cursor {
+                cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgBAMAAACBVGfHAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAnUExURQAAAA4/NgglIKT98CvHrDPryxVjVR6Kd2hOHkk2FSgeC4lnJ////z+CzEgAAAABdFJOUwBA5thmAAAAAWJLR0QMgbNRYwAAAAd0SU1FB+kLBw0aAzZk0XAAAABrSURBVCjPnc9REYAgEATQq7AVtgIVrHAVqEAFKlCBCpYTUUcBAcf7uI83ezezAkCKaYDGYAZLKQ18imgd0X8RRa7Rg1Ng+5DEKR2kD0msG4Pw+fINCNCHARCkxDUMgPuO/u5bw+V2CsdpARs21yTtSf+dVAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNS0xMS0wN1QxMzoyNjowMyswMDowMEw2jPoAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjUtMTEtMDdUMTM6MjY6MDMrMDA6MDA9azRGAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI1LTExLTA3VDEzOjI2OjAzKzAwOjAwan4VmQAAAABJRU5ErkJggg'), auto;
+            }
+            .content-box {
+                @apply bg-gray-900/80 pixel-border p-6 backdrop-blur-sm;
+            }
+        }
+    </style>
+    <style>
+        @font-face {
+            font-family: 'Minecraft';
+            src: local('Minecraft'), url('https://download.zoho.com.cn/v1/workdrive/download/yjkvsba4e10f4680f4777a34d4ada277cec63') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }
+        
+        body {
+            font-family: 'Minecraft', monospace;
+            image-rendering: pixelated;
+            background-image: url('https://download.zoho.com.cn/v1/workdrive/download/yjkvsaf16df5d45ed4e5098d02e394ef9fa87');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: rgba(0, 0, 0, 0.7);
+            background-blend-mode: overlay;
+        }
+        
+        .pixel-art {
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .version-tab {
+            transition: all 0.2s ease;
+        }
+        
+        .version-tab.active {
+            background-color: #7CFC00;
+            color: #000;
+        }
+        
+        header, footer {
+            background-color: rgba(30, 30, 30, 0.9);
+            backdrop-filter: blur(4px);
+        }
+        
+        .minecraft-text-shadow {
+            text-shadow: 2px 2px 0 #000;
+        }
+        
+        .code-block {
+            background-color: #1a1a1a;
+            border: 2px solid #444;
+            padding: 1rem;
+            font-family: monospace;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body class="text-white pixel-cursor">
+    <!-- 页头/导航 -->
+    <header class="pixel-border mb-8">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="w-10 h-10 bg-minecraft-green pixel-border flex items-center justify-center mr-3 animate-pulse-glow">
+                    <i class="fa-solid fa-cube text-black text-xl"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-minecraft-green minecraft-text-shadow">项目介绍</h1>
+            </div>
+            <nav class="hidden md:flex space-x-6">
+                <a href="index.html" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-download mr-1"></i> 下载页面</a>
+                <a href="#" class="text-minecraft-green font-bold"><i class="fa-solid fa-book mr-1"></i> 项目介绍</a>
+                <a href="https://space.bilibili.com/3546636693277438" class="hover:text-minecraft-green transition-colors"><i class="fa-brands fa-bilibili mr-1"></i> 个人空间</a>
+            </nav>
+            <button class="md:hidden text-2xl">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 mb-16">
+        <!-- 项目概述 -->
+        <section class="mb-12">
+            <div class="content-box">
+                <h2 class="text-3xl font-bold mb-6 text-minecraft-green minecraft-text-shadow">我的世界操作系统下载页面</h2>
+                <p class="text-lg mb-4">这是一个精心设计的《我的世界》风格操作系统下载页面，专为《我的世界》爱好者和玩家打造。页面采用像素化设计风格，完美还原游戏中的视觉元素，提供直观、有趣的下载体验。</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                    <div class="feature-card text-center">
+                        <div class="w-16 h-16 bg-minecraft-green pixel-border flex items-center justify-center mb-4 mx-auto">
+                            <i class="fa-solid fa-palette text-black text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">像素风格设计</h3>
+                        <p>完全采用《我的世界》像素美学，包括像素边框、像素光标和像素化字体。</p>
+                    </div>
+                    
+                    <div class="feature-card text-center">
+                        <div class="w-16 h-16 bg-minecraft-green pixel-border flex items-center justify-center mb-4 mx-auto">
+                            <i class="fa-solid fa-mobile-screen-button text-black text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">响应式布局</h3>
+                        <p>适配各种设备尺寸，从桌面到移动设备都能完美显示。</p>
+                    </div>
+                    
+                    <div class="feature-card text-center">
+                        <div class="w-16 h-16 bg-minecraft-green pixel-border flex items-center justify-center mb-4 mx-auto">
+                            <i class="fa-solid fa-bolt text-black text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">流畅动画</h3>
+                        <p>精心设计的动画效果，增强用户体验而不影响性能。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 功能特点 -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold mb-8 text-center text-minecraft-green minecraft-text-shadow">页面功能特点</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="content-box">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fa-solid fa-download text-minecraft-green mr-2"></i> 下载功能
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-minecraft-green mt-1 mr-3"></i>
+                            <span><strong>主下载链接</strong>：提供Windows和macOS版本的主要下载链接</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-minecraft-green mt-1 mr-3"></i>
+                            <span><strong>备用下载链接</strong>：在主链接不可用时提供备用下载选项</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-minecraft-green mt-1 mr-3"></i>
+                            <span><strong>版本选择</strong>：支持最新版、测试版和旧版本的选择</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-minecraft-green mt-1 mr-3"></i>
+                            <span><strong>系统要求</strong>：清晰列出最低和推荐配置要求</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="content-box">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fa-solid fa-paint-roller text-minecraft-green mr-2"></i> 设计特色
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-minecraft-green mt-1 mr-3"></i>
+                            <span><strong>像素边框</strong>：所有元素都采用《我的世界》风格的像素边框</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-minecraft-green mt-1 mr-3"></i>
+                            <span><strong>动态效果</strong>：悬浮动画、脉动发光效果和像素脉冲动画</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-minecraft-green mt-1 mr-3"></i>
+                            <span><strong>游戏化语言</strong>：使用《我的世界》特有的幽默描述方式</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-minecraft-green mt-1 mr-3"></i>
+                            <span><strong>主题配色</strong>：采用《我的世界》标志性的绿色和像素风格颜色</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 技术实现 -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold mb-8 text-center text-minecraft-green minecraft-text-shadow">技术实现</h2>
+            
+            <div class="content-box">
+                <h3 class="text-xl font-bold mb-4">使用的技术栈</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div>
+                        <h4 class="font-bold text-lg mb-3 text-minecraft-green">前端技术</h4>
+                        <ul class="space-y-2">
+                            <li class="flex items-center">
+                                <i class="fa-brands fa-html5 text-orange-500 mr-2"></i>
+                                <span>HTML5 - 页面结构</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa-brands fa-css3-alt text-blue-500 mr-2"></i>
+                                <span>CSS3 - 样式和动画</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa-brands fa-js-square text-yellow-500 mr-2"></i>
+                                <span>JavaScript - 交互功能</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa-solid fa-wind text-teal-500 mr-2"></i>
+                                <span>Tailwind CSS - 实用工具类</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold text-lg mb-3 text-minecraft-green">外部资源</h4>
+                        <ul class="space-y-2">
+                            <li class="flex items-center">
+                                <i class="fa-solid fa-font text-gray-400 mr-2"></i>
+                                <span>Minecraft字体 - 像素风格字体</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa-brands fa-font-awesome text-blue-400 mr-2"></i>
+                                <span>Font Awesome - 图标库</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa-solid fa-image text-green-400 mr-2"></i>
+                                <span>自定义背景 - 《我的世界》风格背景图</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3 class="text-xl font-bold mb-4">关键代码示例</h3>
+                <div class="code-block mb-4">
+                    <pre class="text-sm"><code>/* 像素边框样式 */
+.pixel-border {
+    border-width: 4px;
+    border-style: solid;
+    border-color: #fff #666 #666 #fff;
+}
+
+/* 脉动发光动画 */
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 5px rgba(124, 252, 0, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(124, 252, 0, 0.8), 0 0 30px rgba(124, 252, 0, 0.6); }
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- 页面结构 -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold mb-8 text-center text-minecraft-green minecraft-text-shadow">页面结构</h2>
+            
+            <div class="content-box">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-800">
+                                <th class="p-3 border pixel-border">部分</th>
+                                <th class="p-3 border pixel-border">功能描述</th>
+                                <th class="p-3 border pixel-border">主要内容</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="p-3 border pixel-border">页头导航</td>
+                                <td class="p-3 border pixel-border">网站导航和品牌展示</td>
+                                <td class="p-3 border pixel-border">Logo、导航菜单、移动端菜单按钮</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border pixel-border">主视觉区域</td>
+                                <td class="p-3 border pixel-border">核心下载功能和版本选择</td>
+                                <td class="p-3 border pixel-border">下载按钮、版本选项卡、备用下载链接</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border pixel-border">系统要求</td>
+                                <td class="p-3 border pixel-border">展示运行环境要求</td>
+                                <td class="p-3 border pixel-border">最低配置、推荐配置详细说明</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border pixel-border">功能特性</td>
+                                <td class="p-3 border pixel-border">产品优势展示</td>
+                                <td class="p-3 border pixel-border">六大功能特点，使用游戏化描述</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border pixel-border">截图展示</td>
+                                <td class="p-3 border pixel-border">产品界面预览</td>
+                                <td class="p-3 border pixel-border">系统桌面和游戏界面截图</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border pixel-border">行动号召</td>
+                                <td class="p-3 border pixel-border">促进用户下载</td>
+                                <td class="p-3 border pixel-border">大型下载按钮和幽默提示</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border pixel-border">页脚</td>
+                                <td class="p-3 border pixel-border">补充信息和链接</td>
+                                <td class="p-3 border pixel-border">版权声明、相关链接、法律信息</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 使用说明 -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold mb-8 text-center text-minecraft-green minecraft-text-shadow">使用说明</h2>
+            
+            <div class="content-box">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">对于用户</h3>
+                        <ol class="list-decimal pl-5 space-y-3">
+                            <li>访问下载页面，查看系统要求确保设备兼容</li>
+                            <li>选择适合的操作系统版本（Windows或macOS）</li>
+                            <li>点击相应的下载按钮开始下载</li>
+                            <li>如果主链接无法访问，使用备用下载链接</li>
+                            <li>下载完成后按照安装向导完成安装</li>
+                        </ol>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">对于开发者</h3>
+                        <ol class="list-decimal pl-5 space-y-3">
+                            <li>页面采用响应式设计，适配各种屏幕尺寸</li>
+                            <li>所有样式基于Tailwind CSS，易于定制</li>
+                            <li>动画效果使用CSS关键帧实现，性能优化</li>
+                            <li>像素风格通过自定义CSS类实现</li>
+                            <li>JavaScript仅用于简单的交互功能</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="mt-8 p-4 bg-minecraft-blue/20 pixel-border">
+                    <h4 class="font-bold text-lg mb-2 text-minecraft-blue">注意事项</h4>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>这是一个非官方的《我的世界》主题项目，与Mojang Studios无关联</li>
+                        <li>页面设计完全采用《我的世界》视觉风格，但功能为虚构</li>
+                        <li>下载链接为示例链接，实际使用时需要替换为真实下载地址</li>
+                        <li>页面已针对移动设备优化，但某些动画效果在低性能设备上可能受限</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 返回按钮 -->
+        <section class="text-center">
+            <a href="index.html" class="btn-pixel px-8 py-4 text-xl inline-flex items-center animate-pulse-glow">
+                <i class="fa-solid fa-arrow-left mr-2"></i> 返回下载页面
+            </a>
+        </section>
+    </main>
+
+    <footer class="pixel-border">
+        <div class="container mx-auto px-4 py-8">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center mb-3">
+                        <div class="w-8 h-8 bg-minecraft-green pixel-border flex items-center justify-center mr-2">
+                            <i class="fa-solid fa-cube text-black"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-minecraft-green minecraft-text-shadow">项目介绍</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 max-w-xs">
+                        我的世界操作系统下载页面的详细介绍和功能说明
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h4 class="font-bold mb-3 text-minecraft-green minecraft-text-shadow"><i class="fa-solid fa-link mr-1"></i> 相关链接</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="index.html" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-download mr-1"></i> 下载页面</a></li>
+                            <li><a href="#" class="hover:text-minecraft-green transition-colors"><i class="fa-solid fa-book mr-1"></i> 项目介绍</a></li>
+                            <li><a href="https://space.bilibili.com/3546636693277438" class="hover:text-minecraft-green transition-colors"><i class="fa-brands fa-bilibili mr-1"></i> 个人空间</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-3 text-minecraft-green minecraft-text-shadow"><i class="fa-solid fa-code mr-1"></i> 技术栈</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><span class="text-gray-400">HTML5 & CSS3</span></li>
+                            <li><span class="text-gray-400">Tailwind CSS</span></li>
+                            <li><span class="text-gray-400">JavaScript</span></li>
+                            <li><span class="text-gray-400">Font Awesome</span></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-3 text-minecraft-green minecraft-text-shadow"><i class="fa-solid fa-scale-balanced mr-1"></i> 法律声明</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><span class="text-gray-400">非官方项目</span></li>
+                            <li><span class="text-gray-400">仅供学习参考</span></li>
+                            <li><span class="text-gray-400">Minecraft是Mojang商标</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-sm text-gray-400">
+                <p><i class="fa-solid fa-triangle-exclamation mr-1"></i> 本页面为《我的世界》风格下载页面的介绍文档，项目仅供演示和学习使用。</p>
+                <p class="mt-2"><i class="fa-solid fa-trademark mr-1"></i> Minecraft是Mojang Studios的商标。本页面不隶属于Mojang Studios。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 简单的交互功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为代码块添加复制功能
+            const codeBlocks = document.querySelectorAll('.code-block');
+            
+            codeBlocks.forEach(block => {
+                block.addEventListener('click', function() {
+                    const code = this.querySelector('code').textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // 显示复制成功提示
+                        const originalText = this.querySelector('pre').textContent;
+                        this.querySelector('pre').textContent = '代码已复制到剪贴板！';
+                        
+                        setTimeout(() => {
+                            this.querySelector('pre').textContent = originalText;
+                        }, 1500);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
